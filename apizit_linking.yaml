@@ -1,0 +1,88 @@
+version: 1
+
+runtime:
+  language: python
+  version: "3.12"
+
+routes:
+  - path: /health
+    method: GET
+    function: service:health
+
+  - path: /info
+    method: GET
+    function: service:info
+
+  - path: /echo
+    method: POST
+    function: service:echo
+    parameters:
+      message:
+        source:
+          location: body
+          name: message
+      count:
+        source:
+          location: body
+          name: count
+
+  - path: /items/{item_id}
+    method: GET
+    function: service:item
+    parameters:
+      item_id:
+        source:
+          location: path
+          name: item_id
+      include_details:
+        source:
+          location: query
+          name: include_details
+
+  - path: /slow
+    method: GET
+    function: service:slow
+
+  - path: /ready
+    method: GET
+    function: service:ready
+
+  - path: /text/embedding
+    method: POST
+    function: service:text_embedding
+    parameters:
+      text:
+        source:
+          location: body
+          name: text
+
+  - path: /text/similarity
+    method: POST
+    function: service:text_similarity
+    parameters:
+      left:
+        source:
+          location: body
+          name: left
+      right:
+        source:
+          location: body
+          name: right
+
+  - path: /image/analyze
+    method: POST
+    function: service:image_analyze
+    parameters:
+      file:
+        source:
+          location: file
+          name: file
+
+  - path: /image/embedding
+    method: POST
+    function: service:image_embedding
+    parameters:
+      file:
+        source:
+          location: file
+          name: file
